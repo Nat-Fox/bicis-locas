@@ -1,7 +1,6 @@
-//función que valida que los campos tengan algún contenido
-function ingresoDatos(nombre, apellido, email, password) {
-    if (nombre === '' || apellido === '' || email === '' || password === '') {
-        alert('Debes ingresar todos los datos solicitados');
+function datoVacio(dato) {
+    if (dato == '') {
+        return true;
     }
 }
 
@@ -10,9 +9,6 @@ function contenidoAlfa(data) {
     var expReg = /^[a-zA-Z ]+$/;
     if (!expReg.test(data)) {
         //console.log('no valido');
-        alert('Debes ingresar todos los datos solicitados [a-z][A-Z]');
-    } else {
-        //console.log('valido');
         return true;
     }
 }
@@ -45,7 +41,25 @@ function password(pass) {
     }
 }
 
+function createSpanNombreVacio() {
+    //creo el elemento span para avisar del dato vacío
+    var res = document.createElement('span');
+    var texto = document.createTextNode('Debes ingresar el dato solicitado');
+    var contenedor = document.getElementsByClassName('input-box')[0];
+    res.appendChild(texto);
+    contenedor.appendChild(res);
+    return res;
+}
 
+function createSpanCaractNoValidos() {
+    //creo el spam para avisar del dato no valido
+    var res = document.createElement('span');
+    var texto = document.createTextNode('El contenido debe ser del tipo[a - z][A - Z]');
+    var contenedor = document.getElementsByClassName('input-box')[0];
+    res.appendChild(texto);
+    contenedor.appendChild(res);
+    return res;
+}
 
 function validateForm() {
     //Obtener ingreso por formulario de todos los campos
@@ -56,10 +70,14 @@ function validateForm() {
     //agregue el id selector en el select
     var selector = document.getElementById('selector').value; //no puede tener el valor 0
 
-
-    //Llamo a las funciones
-    if (ingresoDatos(nombre, apellido, email, password) || contenidoAlfa(nombre) || contenidoAlfa(apellido)) {
-        return true;
+    //Validaciones para el nombre
+    if (datoVacio(nombre)) {
+        createSpanNombreVacio();
+    } else if (contenidoAlfa(nombre)) {
+        createSpanCaractNoValidos();
     }
+
+    //Validaciones para el apellido
+
 
 }
